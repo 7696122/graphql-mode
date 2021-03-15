@@ -77,9 +77,9 @@
 
 (defun graphql-locate-config (dir)
   "Locate a graphql config starting in DIR."
-  (if-let ((config-dir (locate-dominating-file dir ".graphqlconfig")))
-      (concat config-dir ".graphqlconfig")
-    (error "Could not find a .graphqlconfig file")))
+  (if-let ((config-dir (locate-dominating-file dir ".graphqlrc")))
+      (concat config-dir ".graphqlrc")
+    (error "Could not find a .graphqlrc file")))
 
 (defun graphql--completing-read-endpoint (endpoints)
   "Select an endpoint configuration from a list of ENDPOINTS."
@@ -91,7 +91,7 @@
   (find-file (graphql-locate-config ".")))
 
 (defun graphql-select-endpoint ()
-  "Set parameters based off of the endpoints listed in a .graphqlconfig file."
+  "Set parameters based off of the endpoints listed in a .graphqlrc file."
   (interactive)
   (let ((config (json-read-file (graphql-locate-config "."))))
     (let-alist config
@@ -100,7 +100,7 @@
           (let-alist endpoint
             (setq graphql-url .url
                   graphql-extra-headers .headers))
-          (error "No endpoint configurations in .graphqlconfig")))))
+          (error "No endpoint configurations in .graphqlrc")))))
 
 (defun graphql-encode-json (query &optional operation variables)
   "Put together a json like object with QUERY, OPERATION, and VARIABLES."
